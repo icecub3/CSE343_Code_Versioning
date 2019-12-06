@@ -1,0 +1,14 @@
+{  "$schema": "http://json-schema.org/draft-04/schema#",
+    "title": "Request information for version controlling module",
+    "type": "object",
+    "description": "Contains required and unrequired data fields for comunication with code versioning module. Important: object_type = code_versioning_request,dest_type = build",
+    "properties": {
+		"dest_type": {"type":"string"},
+        "object_type": {"type": "string"},
+        "github_login": { "type": "string" },
+        "github_password": { "type": "string" },
+        "repository_url": { "type": "string" },
+        "commit_id": {"type": "string"}
+    },
+    "required": [ "dest_type","object_type", "github_login", "github_password", "repository_url"]
+}
