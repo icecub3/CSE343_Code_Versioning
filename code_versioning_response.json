@@ -1,11 +1,16 @@
-{  "$schema": "http://json-schema.org/draft-04/schema#",
-       "title": "Response information for code versioning modules",
-       "type": "object",
-       "description": "Object type = response_code_versioning ,Responses true(1) or false(0),if commit_id is required, add the commit_id",
-       "properties": {
-         "object_type": {"type": "string"},
-	  "failure": {"bool": "True"},
-	  "commit_id": {"type": "string"}  
-       },
-       "required": [ "object_type", "failure" ]
-}
+TEST_JSON_RES = '''{  "$schema": "http://json-schema.org/draft-04/schema#",
+    "title": "Response information",
+    "type": "object",
+    "description": "Contains operation(method) and its execution status with description",
+    "properties": {
+      "object_type": "",
+      "method": "",
+      "status": "",
+      "description": "",
+      "commit_id": "",
+      "github_login": "gtusoftware2019",
+      "github_password": "software2019",
+      "repository_url": "www.github.com/gtusoftware2019/GtuDevOps",
+      "project_name": "",
+    }
+}''

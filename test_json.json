@@ -1,0 +1,11 @@
+{  "$schema": "http://json-schema.org/draft-04/schema#",
+       "title": "Response information for code versioning modules",
+       "type": "object",
+       "description": "Object type = response_code_versioning ,Responses true(1) or false(0),if commit_id is required, add the commit_id",
+       "properties": {
+         "origin": "7",
+	  "failure": "true",
+	  "commit_id": "" 
+       },
+       "required": [ "object_type", "failure" ]
+}
