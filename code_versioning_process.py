@@ -2,7 +2,6 @@ import requests
 import json 
 import logging
 import os
-#logging.basicConfig(filename='code_versioning.log', level=logging.INFO)
 logging.basicConfig(format='%(asctime)s %(message)s',
                 datefmt='%m/%d/%Y %I:%M:%S %p',
                 filename='code_versioning.log',
@@ -11,12 +10,9 @@ logging.basicConfig(format='%(asctime)s %(message)s',
 
 class code_versioning:  
         
-    # Class Variable  json
+    # Class Variable 
     comingJson = json
     sendJson = json
-    
-    #sendGroup = None
-    #comingGroup = None
         
     # The init method or constructor  
     def __init__(self, jsonFile):      
@@ -24,6 +20,7 @@ class code_versioning:
         #parametre olarak gelen json file'ını load(işlenebilecek hale getirir) eder.
         self.comingJson = json.load(jsonFile)
     
+    #directoryde bir json file oluşturur(aşağı kısımlarda hem request olarak gönderilcek hem okunarak bilgiler alıncak)
     def createJsonFileInDirectory(self):
         print(self.sendJson)
         with open('cv_data.json', 'w') as outfile:
@@ -48,7 +45,7 @@ class code_versioning:
             os.popen('rm -f '+commitFilePath)
         #kopyalanan file veya directory'i repository'e ekler ve commit eder
         os.popen('git -C '+repositoryPath+' add '+filename)
-        return os.popen('git -C '+repositoryPath+' commit -m \"'+filename+'\"')
+        os.popen('git -C '+repositoryPath+' commit -m \"'+filename+'\"')
 
     def push(self,repositoryPath,id,password,url):
         logging.info('Push function.')
@@ -58,7 +55,7 @@ class code_versioning:
         os.popen('git -C '+repositoryPath+' remote set-url origin https://'+id+':'+password+'@github.com/'+id+'/'+projectName+'.git')
         #pushlar 
         #BRANCHLER AKTIF KULLANILACAKSA MASTER YERINE BRANCH EKLENEBILIR.
-        return os.popen('git -C '+repositoryPath+' push -u origin master')
+        os.popen('git -C '+repositoryPath+' push -u origin master')
 
     def pull(self,repositoryPath,id,password,url):
         logging.info('Pull function.')
@@ -68,7 +65,7 @@ class code_versioning:
         os.popen('git -C '+repositoryPath+' remote set-url origin https://'+id+':'+password+'@github.com/'+id+'/'+projectName+'.git')
         #pull yapar
         #BRANCHLER AKTIF KULLANILACAKSA MASTER YERINE BRANCH EKLENEBILIR.
-        return os.popen('git -C '+repositoryPath+' pull origin master')
+        os.popen('git -C '+repositoryPath+' pull origin master')
 
     #Hata vermiyor çalışıp çalışmadığından emin değilim
     def merge(self,repositoryPath,id,password,url):
@@ -79,7 +76,7 @@ class code_versioning:
         os.popen('git -C '+repositoryPath+' remote set-url origin https://'+id+':'+password+'@github.com/'+id+'/'+projectName+'.git')
         #merge yapar
         #BRANCHLER AKTIF KULLANILACAKSA MASTER YERINE BRANCH EKLENEBILIR.
-        return os.popen('git -C '+repositoryPath+' merge')
+        os.popen('git -C '+repositoryPath+' merge')
 
     def revert(self,repositoryPath,id,password,url):
         logging.info('Revert function.')
@@ -89,10 +86,8 @@ class code_versioning:
         os.popen('git -C '+repositoryPath+' remote set-url origin https://'+id+':'+password+'@github.com/'+id+'/'+projectName+'.git')
         #merge yapar
         #BRANCHLER AKTIF KULLANILACAKSA MASTER YERINE BRANCH EKLENEBILIR.
-        os.popen('git -C '+repositoryPath+' revert HEAD~1')
-        #$ git reset --hard HEAD~3 
+        os.popen('git -C '+repositoryPath+' revert HEAD')
         os.popen('git -C '+repositoryPath+' commit -m "Revert commit"')
-        #os.popen('git -C '+repositoryPath+' pull origin master')
         os.popen('git -C '+repositoryPath+' push -u origin master')
 
     # Parses the coming json file / Gelen json dosyasını parse eder.
