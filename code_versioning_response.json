@@ -1,16 +1,13 @@
-TEST_JSON_RES = '''{  "$schema": "http://json-schema.org/draft-04/schema#",
+{  
     "title": "Response information",
-    "type": "object",
     "description": "Contains operation(method) and its execution status with description",
-    "properties": {
-      "object_type": "",
-      "method": "",
-      "status": "",
-      "description": "",
-      "commit_id": "",
-      "github_login": "gtusoftware2019",
-      "github_password": "software2019",
-      "repository_url": "www.github.com/gtusoftware2019/GtuDevOps",
-      "project_name": "",
-    }
-}''
+    "destination": "6",
+    "origin": "2",
+    "operation":"repository_creation",
+    "commit_id": "",
+    "github_login": "fatihselimyakar",
+    "github_password": "",
+    "repository_url": "https://github.com/fatihselimyakar/gitpython",
+    "directory_path":"/home/fatihselimyakar/Desktop/gitpython",
+    "project_name": ""
+}
