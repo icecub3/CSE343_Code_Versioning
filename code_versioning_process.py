@@ -117,17 +117,17 @@ class code_versioning:
             path=os.getcwd()
             path=path+'/cv_data.json'
             jsonFile=open(path,'r')
-            self.sendJson = json.load(jsonFile)
-            self.commit(self.sendJson['directory_path'],self.comingJson['commit_file_directory'])
-            r = requests.post(url = 'http://localhost:8081', data = json.dumps(self.sendJson)) 
+            readJson = json.load(jsonFile)
+            self.commit(readJson['directory_path'],self.comingJson['commit_file_directory'])
 
         elif(self.comingJson['origin']=='2' and self.comingJson['operation']=='push'):
             #önceden cv_data.json olarak yazdığı dosyayı okur
             path=os.getcwd()
             path=path+'/cv_data.json'
             jsonFile=open(path,'r')
-            readJson =json.load(jsonFile)
-            self.push(readJson['directory_path'],readJson['github_login'],readJson['github_password'],readJson['repository_url'])
+            self.sendJson =json.load(jsonFile)
+            self.push(self.sendJson['directory_path'],self.sendJson['github_login'],self.sendJson['github_password'],self.sendJson['repository_url'])
+            r = requests.post(url = 'http://localhost:8081', data = json.dumps(self.sendJson)) 
 
         elif(self.comingJson['origin']=='2' and self.comingJson['operation']=='pull'):
             #önceden cv_data.json olarak yazdığı dosyayı okur
@@ -162,13 +162,7 @@ def main():
     cv_obj=code_versioning(jfile)
     cv_obj.parseJson()
 
-  
-
-  #işlemler
-
-  
-
-  
+ 
 if __name__== "__main__":
   main()
 
