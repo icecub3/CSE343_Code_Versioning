@@ -1,0 +1,13 @@
+{  
+    "title":"Code versioning request",
+    "description":"will build",
+	"destination": "1",
+    "origin": "6",
+    "operation":"build",
+    "github_login": "",
+    "github_password": "",
+    "repository_url": "",
+    "commit_id":"",
+    "project_name":"",
+    "directory_path":""
+}
