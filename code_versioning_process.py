@@ -10,7 +10,7 @@ logging.basicConfig(format='%(asctime)s %(message)s',
 
 class code_versioning:  
         
-    # Class Variable 
+    # Instance Variable 
     comingJson = json
     sendJson = json
         
@@ -23,7 +23,7 @@ class code_versioning:
     #directoryde bir json file oluşturur(aşağı kısımlarda hem request olarak gönderilcek hem okunarak bilgiler alıncak)
     def createJsonFileInDirectory(self):
         print(self.sendJson)
-        with open('cv_data.json', 'w') as outfile:
+        with open('cv_response.json', 'w') as outfile:
             writeString=(str)(self.sendJson).replace("\'","\"")
             outfile.write(writeString)
         logging.info('Json file created.')
@@ -113,42 +113,42 @@ class code_versioning:
         
         #plandan gelmişse ve işlem repository creation ise hem request için hemde commit için json file oluşturur ve directoryde json file oluştur.
         elif(self.comingJson['origin']=='2' and self.comingJson['operation']=='commit'):
-            #önceden cv_data.json olarak yazdığı dosyayı okur
+            #önceden cv_response.json olarak yazdığı dosyayı okur
             path=os.getcwd()
-            path=path+'/cv_data.json'
+            path=path+'/cv_response.json'
             jsonFile=open(path,'r')
             readJson = json.load(jsonFile)
             self.commit(readJson['directory_path'],self.comingJson['commit_file_directory'])
 
         elif(self.comingJson['origin']=='2' and self.comingJson['operation']=='push'):
-            #önceden cv_data.json olarak yazdığı dosyayı okur
+            #önceden cv_response.json olarak yazdığı dosyayı okur
             path=os.getcwd()
-            path=path+'/cv_data.json'
+            path=path+'/cv_response.json'
             jsonFile=open(path,'r')
             self.sendJson =json.load(jsonFile)
             self.push(self.sendJson['directory_path'],self.sendJson['github_login'],self.sendJson['github_password'],self.sendJson['repository_url'])
             r = requests.post(url = 'http://localhost:8081', data = json.dumps(self.sendJson)) 
 
         elif(self.comingJson['origin']=='2' and self.comingJson['operation']=='pull'):
-            #önceden cv_data.json olarak yazdığı dosyayı okur
+            #önceden cv_response.json olarak yazdığı dosyayı okur
             path=os.getcwd()
-            path=path+'/cv_data.json'
+            path=path+'/cv_response.json'
             jsonFile=open(path,'r')
             readJson =json.load(jsonFile)
             self.pull(readJson['directory_path'],readJson['github_login'],readJson['github_password'],readJson['repository_url'])
         
         elif(self.comingJson['origin']=='2' and self.comingJson['operation']=='merge'):
-            #önceden cv_data.json olarak yazdığı dosyayı okur
+            #önceden cv_response.json olarak yazdığı dosyayı okur
             path=os.getcwd()
-            path=path+'/cv_data.json'
+            path=path+'/cv_response.json'
             jsonFile=open(path,'r')
             readJson =json.load(jsonFile)
             self.merge(readJson['directory_path'],readJson['github_login'],readJson['github_password'],readJson['repository_url'])
         
         elif(self.comingJson['origin']=='2' and self.comingJson['operation']=='revert'):
-            #önceden cv_data.json olarak yazdığı dosyayı okur
+            #önceden cv_response.json olarak yazdığı dosyayı okur
             path=os.getcwd()
-            path=path+'/cv_data.json'
+            path=path+'/cv_response.json'
             jsonFile=open(path,'r')
             readJson =json.load(jsonFile)
             self.revert(readJson['directory_path'],readJson['github_login'],readJson['github_password'],readJson['repository_url'])
@@ -157,6 +157,8 @@ class code_versioning:
 # Driver Code  
 def main():
     #alttaki json datası mule tarafından direk verilecek.
+    #ilk calısması için gereken json file
+    #jfile = open(r'/home/fatihselimyakar/Desktop/CSE343_Code_Versioning/initial_request.json', 'r')
     jfile = open(r'/home/fatihselimyakar/Desktop/CSE343_Code_Versioning/process_file.json', 'r')
 
     cv_obj=code_versioning(jfile)
