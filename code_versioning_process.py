@@ -155,16 +155,15 @@ class code_versioning:
 
     
 # Driver Code  
-def main():
+def main(jfile):
     #alttaki json datası mule tarafından direk verilecek.
     #ilk calısması için gereken json file
-    #jfile = open(r'/home/fatihselimyakar/Desktop/CSE343_Code_Versioning/initial_request.json', 'r')
-    jfile = open(r'/home/fatihselimyakar/Desktop/CSE343_Code_Versioning/process_file.json', 'r')
-
+    #jfile = open(r'/Users/fatihselimyakar/Desktop/Git/CSE343_Code_Versioning/initial_request.json', 'r')
+    #jfile = open(r'/Users/fatihselimyakar/Desktop/Git/CSE343_Code_Versioning/process_file.json', 'r')
     cv_obj=code_versioning(jfile)
     cv_obj.parseJson()
 
  
 if __name__== "__main__":
-  main()
+  main(jfile)
 
