@@ -105,7 +105,7 @@ class code_versioning:
             self.sendJson = self.comingJson
             self.sendJson['title']='Code versioning request'
             self.sendJson['description']='will build'
-            self.sendJson['destination']='1'
+            self.sendJson['destination']='2'
             self.sendJson['origin']='6'
             self.sendJson['operation']='build'
             self.createJsonFileInDirectory()
@@ -117,8 +117,10 @@ class code_versioning:
             path=os.getcwd()
             path=path+'/cv_response.json'
             jsonFile=open(path,'r')
-            readJson = json.load(jsonFile)
-            self.commit(readJson['directory_path'],self.comingJson['commit_file_directory'])
+            self.sendJson = json.load(jsonFile)
+            self.commit(self.sendJson['repository_path'],self.comingJson['project_path'])
+            self.push(self.sendJson['repository_path'],self.sendJson['github_login'],self.sendJson['github_password'],self.sendJson['repository_url'])
+            r = requests.post(url = 'http://localhost:8081', data = json.dumps(self.sendJson)) 
 
         elif(self.comingJson['origin']=='2' and self.comingJson['operation']=='push'):
             #onceden cv_response.json olarak yazdigi dosyayi okur
@@ -126,7 +128,7 @@ class code_versioning:
             path=path+'/cv_response.json'
             jsonFile=open(path,'r')
             self.sendJson =json.load(jsonFile)
-            self.push(self.sendJson['directory_path'],self.sendJson['github_login'],self.sendJson['github_password'],self.sendJson['repository_url'])
+            self.push(self.sendJson['repository_path'],self.sendJson['github_login'],self.sendJson['github_password'],self.sendJson['repository_url'])
             r = requests.post(url = 'http://localhost:8081', data = json.dumps(self.sendJson)) 
 
         elif(self.comingJson['origin']=='2' and self.comingJson['operation']=='pull'):
@@ -135,7 +137,7 @@ class code_versioning:
             path=path+'/cv_response.json'
             jsonFile=open(path,'r')
             readJson =json.load(jsonFile)
-            self.pull(readJson['directory_path'],readJson['github_login'],readJson['github_password'],readJson['repository_url'])
+            self.pull(readJson['repository_path'],readJson['github_login'],readJson['github_password'],readJson['repository_url'])
         
         elif(self.comingJson['origin']=='2' and self.comingJson['operation']=='merge'):
             #onceden cv_response.json olarak yazdigi dosyayi okur
@@ -143,7 +145,7 @@ class code_versioning:
             path=path+'/cv_response.json'
             jsonFile=open(path,'r')
             readJson =json.load(jsonFile)
-            self.merge(readJson['directory_path'],readJson['github_login'],readJson['github_password'],readJson['repository_url'])
+            self.merge(readJson['repository_path'],readJson['github_login'],readJson['github_password'],readJson['repository_url'])
         
         elif(self.comingJson['origin']=='2' and self.comingJson['operation']=='revert'):
             #onceden cv_response.json olarak yazdigi dosyayi okur
@@ -151,19 +153,19 @@ class code_versioning:
             path=path+'/cv_response.json'
             jsonFile=open(path,'r')
             readJson =json.load(jsonFile)
-            self.revert(readJson['directory_path'],readJson['github_login'],readJson['github_password'],readJson['repository_url'])
+            self.revert(readJson['repository_path'],readJson['github_login'],readJson['github_password'],readJson['repository_url'])
 
     
 # Driver Code  
-def main(jfile):
+def main():
     #alttaki json datasi mule tarafindan direk verilecek.
     #ilk calismasi icin gereken json file
-    #jfile = open(r'/Users/fatihselimyakar/Desktop/Git/CSE343_Code_Versioning/initial_request.json', 'r')
-    #jfile = open(r'/Users/fatihselimyakar/Desktop/Git/CSE343_Code_Versioning/process_file.json', 'r')
+    jfile = open(r'/home/fatihselimyakar/Desktop/CSE343_Code_Versioning/initial_request.json', 'r')
+    #jfile = open(r'/home/fatihselimyakar/Desktop/CSE343_Code_Versioning/process_file.json', 'r')
     cv_obj=code_versioning(jfile)
     cv_obj.parseJson()
 
  
 if __name__== "__main__":
-  main(jfile)
+  main()
 

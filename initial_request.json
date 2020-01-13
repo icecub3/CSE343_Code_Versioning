@@ -1,13 +1,12 @@
 {  
-    "title": "Response information",
-    "description": "Contains operation(method) and its execution status with description",
+    "title": "Code versioning request",
+    "description":"Operation can be repository_creation,commit,merge,push,revert,pull",
     "destination": "6",
     "origin": "2",
-    "operation":"repository_creation",
-    "commit_id": "",
+    "operation":"commit",
     "github_login": "fatihselimyakar",
-    "github_password": "",
+    "github_password": "Nf01012018",
     "repository_url": "https://github.com/fatihselimyakar/gitpython",
-    "directory_path":"/home/fatihselimyakar/Desktop/gitpython",
-    "project_name": ""
+    "repository_path":"/home/fatihselimyakar/Desktop/gitpython",
+    "project_path":"/home/fatihselimyakar/Desktop/CVB3.txt"
 }
