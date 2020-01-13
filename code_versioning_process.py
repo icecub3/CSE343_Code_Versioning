@@ -17,10 +17,10 @@ class code_versioning:
     # The init method or constructor  
     def __init__(self, jsonFile):      
         logging.info('Object created')
-        #parametre olarak gelen json file'ını load(işlenebilecek hale getirir) eder.
+        #parametre olarak gelen json fileini load(islenebilecek hale getirir) eder.
         self.comingJson = json.load(jsonFile)
     
-    #directoryde bir json file oluşturur(aşağı kısımlarda hem request olarak gönderilcek hem okunarak bilgiler alıncak)
+    #directoryde bir json file olusturur(asagi kisimlarda hem request olarak gonderilcek hem okunarak bilgiler alincak)
     def createJsonFileInDirectory(self):
         print(self.sendJson)
         with open('cv_response.json', 'w') as outfile:
@@ -33,13 +33,13 @@ class code_versioning:
 
     def commit(self,repositoryPath,commitFilePath):
         logging.info('Commit function.')
-        #split ederek file ismini bulur ve filename değişkenine kaydeder
+        #split ederek file ismini bulur ve filename degiskenine kaydeder
         filename=self.splitPathAndReturnFilename(commitFilePath)
-        #eğer path directory ise onu repository directorysi içine kopyalar ve siler
+        #eger path directory ise onu repository directorysi icine kopyalar ve siler
         if os.path.isdir(commitFilePath):  
             os.popen('cp -r '+commitFilePath+' '+repositoryPath)
             os.popen('rm -rf '+commitFilePath)
-        #eğer path file ise onu repository directorysi içine kopyalar ve siler
+        #eger path file ise onu repository directorysi icine kopyalar ve siler
         elif os.path.isfile(commitFilePath):  
             os.popen('cp '+commitFilePath+' '+repositoryPath)
             os.popen('rm -f '+commitFilePath)
@@ -51,7 +51,7 @@ class code_versioning:
         logging.info('Push function.')
         #url'den proje ismini split ederek bulur
         projectName=self.splitPathAndReturnFilename(url)
-        #id ve password kullanarak remote'u günceller
+        #id ve password kullanarak remote'u gunceller
         os.popen('git -C '+repositoryPath+' remote set-url origin https://'+id+':'+password+'@github.com/'+id+'/'+projectName+'.git')
         #pushlar 
         #BRANCHLER AKTIF KULLANILACAKSA MASTER YERINE BRANCH EKLENEBILIR.
@@ -61,18 +61,18 @@ class code_versioning:
         logging.info('Pull function.')
         #url'den proje ismini split ederek bulur
         projectName=self.splitPathAndReturnFilename(url)
-        #id ve password kullanarak remote'u günceller
+        #id ve password kullanarak remote'u gunceller
         os.popen('git -C '+repositoryPath+' remote set-url origin https://'+id+':'+password+'@github.com/'+id+'/'+projectName+'.git')
         #pull yapar
         #BRANCHLER AKTIF KULLANILACAKSA MASTER YERINE BRANCH EKLENEBILIR.
         os.popen('git -C '+repositoryPath+' pull origin master')
 
-    #Hata vermiyor çalışıp çalışmadığından emin değilim
+    #Hata vermiyor calisip calismadigindan emin degilim
     def merge(self,repositoryPath,id,password,url):
         logging.info('Merge function.')
         #url'den proje ismini split ederek bulur
         projectName=self.splitPathAndReturnFilename(url)
-        #id ve password kullanarak remote'u günceller
+        #id ve password kullanarak remote'u gunceller
         os.popen('git -C '+repositoryPath+' remote set-url origin https://'+id+':'+password+'@github.com/'+id+'/'+projectName+'.git')
         #merge yapar
         #BRANCHLER AKTIF KULLANILACAKSA MASTER YERINE BRANCH EKLENEBILIR.
@@ -82,7 +82,7 @@ class code_versioning:
         logging.info('Revert function.')
         #url'den proje ismini split ederek bulur
         projectName=self.splitPathAndReturnFilename(url)
-        #id ve password kullanarak remote'u günceller
+        #id ve password kullanarak remote'u gunceller
         os.popen('git -C '+repositoryPath+' remote set-url origin https://'+id+':'+password+'@github.com/'+id+'/'+projectName+'.git')
         #merge yapar
         #BRANCHLER AKTIF KULLANILACAKSA MASTER YERINE BRANCH EKLENEBILIR.
@@ -90,17 +90,17 @@ class code_versioning:
         os.popen('git -C '+repositoryPath+' commit -m "Revert commit"')
         os.popen('git -C '+repositoryPath+' push -u origin master')
 
-    # Parses the coming json file / Gelen json dosyasını parse eder.
+    # Parses the coming json file / Gelen json dosyasini parse eder.
     def parseJson(self):
-        #logger hangi stagede ise o stage hakkında bilgi verir.
+        #logger hangi stagede ise o stage hakkinda bilgi verir.
         logging.info('Json Parsing Function')
 
-        #gelen json file'a göre işlemler yapar
-        if(self.comingJson['destination']!='6'): #Eğer destination'u cv olmayan bir dosya alırsa error verir ve çıkar.
+        #gelen json file'a gore islemler yapar
+        if(self.comingJson['destination']!='6'): #Eger destination'u cv olmayan bir dosya alirsa error verir ve cikar.
             logging.error('Json destination is not code versioning ')
             exit()
         
-        #plandan gelmişse ve işlem repository creation ise hem request için hemde commit için json file oluşturur ve directory'e yazar.
+        #plandan gelmisse ve islem repository creation ise hem request icin hemde commit icin json file olusturur ve directory'e yazar.
         elif(self.comingJson['origin']=='2' and self.comingJson['operation']=='repository_creation'):
             self.sendJson = self.comingJson
             self.sendJson['title']='Code versioning request'
@@ -111,9 +111,9 @@ class code_versioning:
             self.createJsonFileInDirectory()
             logging.info('Repository informations are received')
         
-        #plandan gelmişse ve işlem repository creation ise hem request için hemde commit için json file oluşturur ve directoryde json file oluştur.
+        #plandan gelmisse ve islem repository creation ise hem request icin hemde commit icin json file olusturur ve directoryde json file olustur.
         elif(self.comingJson['origin']=='2' and self.comingJson['operation']=='commit'):
-            #önceden cv_response.json olarak yazdığı dosyayı okur
+            #onceden cv_response.json olarak yazdigi dosyayi okur
             path=os.getcwd()
             path=path+'/cv_response.json'
             jsonFile=open(path,'r')
@@ -121,7 +121,7 @@ class code_versioning:
             self.commit(readJson['directory_path'],self.comingJson['commit_file_directory'])
 
         elif(self.comingJson['origin']=='2' and self.comingJson['operation']=='push'):
-            #önceden cv_response.json olarak yazdığı dosyayı okur
+            #onceden cv_response.json olarak yazdigi dosyayi okur
             path=os.getcwd()
             path=path+'/cv_response.json'
             jsonFile=open(path,'r')
@@ -130,7 +130,7 @@ class code_versioning:
             r = requests.post(url = 'http://localhost:8081', data = json.dumps(self.sendJson)) 
 
         elif(self.comingJson['origin']=='2' and self.comingJson['operation']=='pull'):
-            #önceden cv_response.json olarak yazdığı dosyayı okur
+            #onceden cv_response.json olarak yazdigi dosyayi okur
             path=os.getcwd()
             path=path+'/cv_response.json'
             jsonFile=open(path,'r')
@@ -138,7 +138,7 @@ class code_versioning:
             self.pull(readJson['directory_path'],readJson['github_login'],readJson['github_password'],readJson['repository_url'])
         
         elif(self.comingJson['origin']=='2' and self.comingJson['operation']=='merge'):
-            #önceden cv_response.json olarak yazdığı dosyayı okur
+            #onceden cv_response.json olarak yazdigi dosyayi okur
             path=os.getcwd()
             path=path+'/cv_response.json'
             jsonFile=open(path,'r')
@@ -146,7 +146,7 @@ class code_versioning:
             self.merge(readJson['directory_path'],readJson['github_login'],readJson['github_password'],readJson['repository_url'])
         
         elif(self.comingJson['origin']=='2' and self.comingJson['operation']=='revert'):
-            #önceden cv_response.json olarak yazdığı dosyayı okur
+            #onceden cv_response.json olarak yazdigi dosyayi okur
             path=os.getcwd()
             path=path+'/cv_response.json'
             jsonFile=open(path,'r')
@@ -156,8 +156,8 @@ class code_versioning:
     
 # Driver Code  
 def main(jfile):
-    #alttaki json datası mule tarafından direk verilecek.
-    #ilk calısması için gereken json file
+    #alttaki json datasi mule tarafindan direk verilecek.
+    #ilk calismasi icin gereken json file
     #jfile = open(r'/Users/fatihselimyakar/Desktop/Git/CSE343_Code_Versioning/initial_request.json', 'r')
     #jfile = open(r'/Users/fatihselimyakar/Desktop/Git/CSE343_Code_Versioning/process_file.json', 'r')
     cv_obj=code_versioning(jfile)
