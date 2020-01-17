@@ -2,6 +2,7 @@ import requests
 import json 
 import logging
 import os
+import time
 logging.basicConfig(format='%(asctime)s %(message)s',
                 datefmt='%m/%d/%Y %I:%M:%S %p',
                 filename='code_versioning.log',
@@ -73,7 +74,9 @@ class code_versioning:
             os.popen('cp '+commitFilePath+' '+repositoryPath)
             os.popen('rm -f '+commitFilePath)
         #kopyalanan file veya directory'i repository'e ekler ve commit eder
+        time.sleep(1)
         os.popen('git -C '+repositoryPath+' add '+filename)
+        time.sleep(1)
         os.popen('git -C '+repositoryPath+' commit -m \"'+filename+'\"')
 
     def push(self,repositoryPath,id,password,url):
@@ -83,7 +86,7 @@ class code_versioning:
         #id ve password kullanarak remote'u gunceller
         os.popen('git -C '+repositoryPath+' remote set-url origin https://'+id+':'+password+'@github.com/'+id+'/'+projectName+'.git')
         #pushlar 
-        #BRANCHLER AKTIF KULLANILACAKSA MASTER YERINE BRANCH EKLENEBILIR.
+        time.sleep(1)
         os.popen('git -C '+repositoryPath+' push -u origin master')
 
     def pull(self,repositoryPath,id,password,url):
@@ -93,7 +96,7 @@ class code_versioning:
         #id ve password kullanarak remote'u gunceller
         os.popen('git -C '+repositoryPath+' remote set-url origin https://'+id+':'+password+'@github.com/'+id+'/'+projectName+'.git')
         #pull yapar
-        #BRANCHLER AKTIF KULLANILACAKSA MASTER YERINE BRANCH EKLENEBILIR.
+        time.sleep(1)
         os.popen('git -C '+repositoryPath+' pull origin master')
 
     #Hata vermiyor calisip calismadigindan emin degilim
@@ -104,7 +107,7 @@ class code_versioning:
         #id ve password kullanarak remote'u gunceller
         os.popen('git -C '+repositoryPath+' remote set-url origin https://'+id+':'+password+'@github.com/'+id+'/'+projectName+'.git')
         #merge yapar
-        #BRANCHLER AKTIF KULLANILACAKSA MASTER YERINE BRANCH EKLENEBILIR.
+        time.sleep(1)
         os.popen('git -C '+repositoryPath+' merge')
 
     def revert(self,repositoryPath,id,password,url):
@@ -113,10 +116,11 @@ class code_versioning:
         projectName=self.splitPathAndReturnFilename(url)
         #id ve password kullanarak remote'u gunceller
         os.popen('git -C '+repositoryPath+' remote set-url origin https://'+id+':'+password+'@github.com/'+id+'/'+projectName+'.git')
-        #merge yapar
-        #BRANCHLER AKTIF KULLANILACAKSA MASTER YERINE BRANCH EKLENEBILIR.
+        time.sleep(1)
         os.popen('git -C '+repositoryPath+' revert HEAD')
+        time.sleep(1)
         os.popen('git -C '+repositoryPath+' commit -m "Revert commit"')
+        time.sleep(1)
         os.popen('git -C '+repositoryPath+' push -u origin master')
 
     # Parses the coming json file / Gelen json dosyasini parse eder.

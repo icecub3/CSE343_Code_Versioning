@@ -3,10 +3,10 @@
     "description":"Operation can be repository_creation,commit,merge,push,revert,pull",
     "destination": "6",
     "origin": "2",
-    "operation":"commit",
+    "operation":"revert",
     "github_login": "fatihselimyakar",
     "github_password": "Nf01012018",
     "repository_url": "https://github.com/fatihselimyakar/gitpython",
     "repository_path":"/home/fatihselimyakar/Desktop/gitpython",
-    "project_path":"/home/fatihselimyakar/Desktop/CVB3.txt"
+    "project_path":"/home/fatihselimyakar/Desktop/deneme3.txt"
 }
