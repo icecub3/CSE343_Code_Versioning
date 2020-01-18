@@ -17,7 +17,7 @@ class ServerHandler(http.server.CGIHTTPRequestHandler):
         # parses json file
         data = json.loads(json_body)
         # prints json object's properties,failure part(like array accessing)
-        print(data["properties"]["failure"])
+        print(data['origin'])
 
         # Start of operations
 

@@ -3,9 +3,9 @@
        "type": "object",
        "description": "Object type = response_code_versioning ,Responses true(1) or false(0),if commit_id is required, add the commit_id",
        "properties": {
-         "object_type": {"type": "string"},
-	  "failure": {"bool": "True"},
-	  "commit_id": {"type": "string"}  
+         "origin": "7",
+	  "failure": "true",
+	  "commit_id": "" 
        },
        "required": [ "object_type", "failure" ]
 }

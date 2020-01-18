@@ -1,0 +1,9 @@
+{  
+    "title": "Process information",
+    "description": "Operation can be commit,merge,push,revert,pull.Currently branch,project_name and commit_id is not necessary",
+    "destination": "6",
+    "origin": "2",
+    "operation":"commit",
+    "commit_file_directory":"/home/fatihselimyakar/Desktop/222.txt",
+    "project_name": ""
+}
