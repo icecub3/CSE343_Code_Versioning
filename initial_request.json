@@ -1,6 +1,6 @@
 {  
-    "title": "Code versioning request",
-    "description":"Operation can be repository_creation,commit,merge,push,revert,pull",
+    "title": "Code Versioning Request",
+    "description":"Operation can be 'repository_creation', 'commit', 'merge', 'push', 'revert', 'pull'.",
     "destination": "6",
     "origin": "2",
     "operation":"revert",
