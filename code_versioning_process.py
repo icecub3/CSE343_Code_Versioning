@@ -76,11 +76,11 @@ class code_versioning:
         # If it is a directory, copies it to repository and deletes from current directory.
         if os.path.isdir(commitFilePath):  
             os.popen('cp -r '+commitFilePath+' '+repositoryPath)
-            os.popen('rm -rf '+commitFilePath)
+            #os.popen('rm -rf '+commitFilePath)
         # If it is a file, copies it to repository and deletes from current directory.
         elif os.path.isfile(commitFilePath):  
             os.popen('cp '+commitFilePath+' '+repositoryPath)
-            os.popen('rm -f '+commitFilePath)
+            #os.popen('rm -f '+commitFilePath)
         # Adds copied file or directory to the repository, then commits it.
         time.sleep(1)
         os.popen('git -C '+repositoryPath+' add '+filename)
