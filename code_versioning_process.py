@@ -98,6 +98,8 @@ class code_versioning:
         time.sleep(1)
         # Performs push
         os.popen('git -C '+repositoryPath+' push -u origin master')
+        #Alternatif olarak
+        #os.popen('git -C '+repositoryPath+' push --force -u origin master')
         logging.info('Push function finished.')
 
     # git pull
@@ -173,6 +175,7 @@ class code_versioning:
             path=path+'/cv_response.json'
             jsonFile=open(path,'r')
             self.sendJson = json.load(jsonFile)
+            self.pull(self.sendJson['repository_path'],self.sendJson['github_login'],self.sendJson['github_password'],self.sendJson['repository_url'])
             self.commit(self.sendJson['repository_path'],self.comingJson['project_path'])
             self.push(self.sendJson['repository_path'],self.sendJson['github_login'],self.sendJson['github_password'],self.sendJson['repository_url'])
             r = requests.post(url = 'http://localhost:8081', data = json.dumps(self.sendJson)) 
