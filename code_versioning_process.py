@@ -95,6 +95,8 @@ class code_versioning:
         projectName=self.splitPathAndReturnFilename(url)
         # Updates remote repository url by using the incoming github id and password. 
         os.popen('git -C '+repositoryPath+' remote set-url origin https://'+id+':'+password+'@github.com/'+id+'/'+projectName+'.git')
+        #Bilgisayarda calismasi icin
+        #os.popen('git -C '+repositoryPath+' remote set-url origin https://'+id+':'+password+'@github.com/'+id+'/GtuDevOps'+'.git')
         time.sleep(1)
         # Performs push
         os.popen('git -C '+repositoryPath+' push -u origin master')
@@ -109,6 +111,7 @@ class code_versioning:
         projectName=self.splitPathAndReturnFilename(url)
         # Updates remote repository url by using the incoming github id and password. 
         os.popen('git -C '+repositoryPath+' remote set-url origin https://'+id+':'+password+'@github.com/'+id+'/'+projectName+'.git')
+        # os.popen('git -C '+repositoryPath+' remote set-url origin https://'+id+':'+password+'@github.com/'+id+'/GtuDevOps'+'.git')
         time.sleep(1)
         # Performs pull
         os.popen('git -C '+repositoryPath+' pull origin master')
@@ -123,6 +126,7 @@ class code_versioning:
         projectName=self.splitPathAndReturnFilename(url)
         # Updates remote repository url by using the incoming github id and password. 
         os.popen('git -C '+repositoryPath+' remote set-url origin https://'+id+':'+password+'@github.com/'+id+'/'+projectName+'.git')
+        #os.popen('git -C '+repositoryPath+' remote set-url origin https://'+id+':'+password+'@github.com/'+id+'/GtuDevOps'+'.git')
         time.sleep(1)
         # Performs merge
         os.popen('git -C '+repositoryPath+' merge')
@@ -135,6 +139,7 @@ class code_versioning:
         projectName=self.splitPathAndReturnFilename(url)
         # Updates remote repository url by using the incoming github id and password. 
         os.popen('git -C '+repositoryPath+' remote set-url origin https://'+id+':'+password+'@github.com/'+id+'/'+projectName+'.git')
+        #os.popen('git -C '+repositoryPath+' remote set-url origin https://'+id+':'+password+'@github.com/'+id+'/GtuDevOps'+'.git')
         time.sleep(1)
         # Performs revert
         os.popen('git -C '+repositoryPath+' revert HEAD')
