@@ -183,7 +183,7 @@ class code_versioning:
             self.sendJson = json.load(jsonFile)
             if os.path.isdir(self.comingJson['project_path']) or os.path.isfile(self.comingJson['project_path']):
                 self.pull(self.sendJson['repository_path'],self.sendJson['github_login'],self.sendJson['github_password'],self.sendJson['repository_url'])
-                found=self.commit(self.sendJson['repository_path'],self.comingJson['project_path'])
+                self.commit(self.sendJson['repository_path'],self.comingJson['project_path'])
                 self.push(self.sendJson['repository_path'],self.sendJson['github_login'],self.sendJson['github_password'],self.sendJson['repository_url'])
                 r = requests.post(url = 'http://localhost:8081', data = json.dumps(self.sendJson))
             else:
