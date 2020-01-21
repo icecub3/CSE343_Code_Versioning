@@ -143,7 +143,7 @@ class code_versioning:
         os.popen('git -C '+repositoryPath+' remote set-url origin https://'+id+':'+password+'@github.com/'+id+'/GtuDevOps'+'.git')
         time.sleep(1)
         # Performs revert
-        os.popen('git -C '+repositoryPath+' revert HEAD')
+        os.popen('git -C '+repositoryPath+' revert -m 1 HEAD')
         time.sleep(1)
         # Performs commit
         os.popen('git -C '+repositoryPath+' commit -m "Revert commit"')
