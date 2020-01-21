@@ -180,10 +180,15 @@ class code_versioning:
             path=path+'/cv_response.json'
             jsonFile=open(path,'r')
             self.sendJson = json.load(jsonFile)
-            self.pull(self.sendJson['repository_path'],self.sendJson['github_login'],self.sendJson['github_password'],self.sendJson['repository_url'])
-            self.commit(self.sendJson['repository_path'],self.comingJson['project_path'])
-            self.push(self.sendJson['repository_path'],self.sendJson['github_login'],self.sendJson['github_password'],self.sendJson['repository_url'])
-            r = requests.post(url = 'http://localhost:8081', data = json.dumps(self.sendJson)) 
+            if os.path.isdir(self.comingJson['project_path']) or os.path.isfile(self.comingJson['project_path']):
+                self.pull(self.sendJson['repository_path'],self.sendJson['github_login'],self.sendJson['github_password'],self.sendJson['repository_url'])
+                found=self.commit(self.sendJson['repository_path'],self.comingJson['project_path'])
+                self.push(self.sendJson['repository_path'],self.sendJson['github_login'],self.sendJson['github_password'],self.sendJson['repository_url'])
+                r = requests.post(url = 'http://localhost:8081', data = json.dumps(self.sendJson))
+            else:
+                logging.error('Folder or file is not here!')
+                exit()
+
 
         # If the request coming from the 'Plan' group and the operation is 'push'
         # read data from the response file, perform push, send response back.
