@@ -76,17 +76,18 @@ class code_versioning:
         # If it is a directory, copies it to repository and deletes from current directory.
         if os.path.isdir(commitFilePath):  
             os.popen('cp -r '+commitFilePath+' '+repositoryPath)
-            os.popen('rm -rf '+commitFilePath)
+            #os.popen('rm -rf '+commitFilePath)
         # If it is a file, copies it to repository and deletes from current directory.
         elif os.path.isfile(commitFilePath):  
             os.popen('cp '+commitFilePath+' '+repositoryPath)
-            os.popen('rm -f '+commitFilePath)
+            #os.popen('rm -f '+commitFilePath)
         # Adds copied file or directory to the repository, then commits it.
         time.sleep(1)
-        os.popen('git -C '+repositoryPath+' add '+filename)
+        os.popen('git -C '+repositoryPath+' add -f '+filename)
         time.sleep(1)
         os.popen('git -C '+repositoryPath+' commit -m \"'+filename+'\"')
         logging.info('Commit function finished.')
+
 
     # git push
     def push(self,repositoryPath,id,password,url):
@@ -94,10 +95,14 @@ class code_versioning:
         # Finds project name by parsing the incoming url.
         projectName=self.splitPathAndReturnFilename(url)
         # Updates remote repository url by using the incoming github id and password. 
-        os.popen('git -C '+repositoryPath+' remote set-url origin https://'+id+':'+password+'@github.com/'+id+'/'+projectName+'.git')
+        #os.popen('git -C '+repositoryPath+' remote set-url origin https://'+id+':'+password+'@github.com/'+id+'/'+projectName+'.git')
+        #Bilgisayarda calismasi icin
+        os.popen('git -C '+repositoryPath+' remote set-url origin https://'+id+':'+password+'@github.com/'+id+'/GtuDevOps'+'.git')
         time.sleep(1)
         # Performs push
-        os.popen('git -C '+repositoryPath+' push -u origin master')
+        #os.popen('git -C '+repositoryPath+' push -u origin master')
+        #Alternatif olarak
+        os.popen('git -C '+repositoryPath+' push -f -u origin master')
         logging.info('Push function finished.')
 
     # git pull
@@ -106,7 +111,8 @@ class code_versioning:
         # Finds project name by parsing the incoming url.
         projectName=self.splitPathAndReturnFilename(url)
         # Updates remote repository url by using the incoming github id and password. 
-        os.popen('git -C '+repositoryPath+' remote set-url origin https://'+id+':'+password+'@github.com/'+id+'/'+projectName+'.git')
+        #os.popen('git -C '+repositoryPath+' remote set-url origin https://'+id+':'+password+'@github.com/'+id+'/'+projectName+'.git')
+        os.popen('git -C '+repositoryPath+' remote set-url origin https://'+id+':'+password+'@github.com/'+id+'/GtuDevOps'+'.git')
         time.sleep(1)
         # Performs pull
         os.popen('git -C '+repositoryPath+' pull origin master')
@@ -120,7 +126,8 @@ class code_versioning:
         # Finds project name by parsing the incoming url.
         projectName=self.splitPathAndReturnFilename(url)
         # Updates remote repository url by using the incoming github id and password. 
-        os.popen('git -C '+repositoryPath+' remote set-url origin https://'+id+':'+password+'@github.com/'+id+'/'+projectName+'.git')
+        #os.popen('git -C '+repositoryPath+' remote set-url origin https://'+id+':'+password+'@github.com/'+id+'/'+projectName+'.git')
+        os.popen('git -C '+repositoryPath+' remote set-url origin https://'+id+':'+password+'@github.com/'+id+'/GtuDevOps'+'.git')
         time.sleep(1)
         # Performs merge
         os.popen('git -C '+repositoryPath+' merge')
@@ -132,16 +139,17 @@ class code_versioning:
         # Finds project name by parsing the incoming url.
         projectName=self.splitPathAndReturnFilename(url)
         # Updates remote repository url by using the incoming github id and password. 
-        os.popen('git -C '+repositoryPath+' remote set-url origin https://'+id+':'+password+'@github.com/'+id+'/'+projectName+'.git')
+        #os.popen('git -C '+repositoryPath+' remote set-url origin https://'+id+':'+password+'@github.com/'+id+'/'+projectName+'.git')
+        os.popen('git -C '+repositoryPath+' remote set-url origin https://'+id+':'+password+'@github.com/'+id+'/GtuDevOps'+'.git')
         time.sleep(1)
         # Performs revert
-        os.popen('git -C '+repositoryPath+' revert HEAD')
+        os.popen('git -C '+repositoryPath+' revert -m 1 HEAD')
         time.sleep(1)
         # Performs commit
         os.popen('git -C '+repositoryPath+' commit -m "Revert commit"')
         time.sleep(1)
         # Performs push
-        os.popen('git -C '+repositoryPath+' push -u origin master')
+        os.popen('git -C '+repositoryPath+' push -f -u origin master')#DIKKAT -f KOYDUM
         logging.info('Revert function finished.')
 
     # Parses the coming json file / Gelen json dosyasini parse eder.
@@ -173,9 +181,15 @@ class code_versioning:
             path=path+'/cv_response.json'
             jsonFile=open(path,'r')
             self.sendJson = json.load(jsonFile)
-            self.commit(self.sendJson['repository_path'],self.comingJson['project_path'])
-            self.push(self.sendJson['repository_path'],self.sendJson['github_login'],self.sendJson['github_password'],self.sendJson['repository_url'])
-            r = requests.post(url = 'http://localhost:8081', data = json.dumps(self.sendJson)) 
+            if os.path.isdir(self.comingJson['project_path']) or os.path.isfile(self.comingJson['project_path']):
+                self.pull(self.sendJson['repository_path'],self.sendJson['github_login'],self.sendJson['github_password'],self.sendJson['repository_url'])
+                self.commit(self.sendJson['repository_path'],self.comingJson['project_path'])
+                self.push(self.sendJson['repository_path'],self.sendJson['github_login'],self.sendJson['github_password'],self.sendJson['repository_url'])
+                r = requests.post(url = 'http://localhost:8081', data = json.dumps(self.sendJson))
+            else:
+                logging.error('Folder or file is not here!')
+                exit()
+
 
         # If the request coming from the 'Plan' group and the operation is 'push'
         # read data from the response file, perform push, send response back.
